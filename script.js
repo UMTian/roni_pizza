@@ -107,7 +107,7 @@ function updateLineup() {
     const info = pizzaData[currentPizzaIndex];
     if (lineupName) lineupName.textContent = info.title.replace(/<br>/g, ' ');
     if (lineupDesc) lineupDesc.textContent = info.subtitle.replace(/<br>/g, ' ');
-    if (lineupPrice) lineupPrice.textContent = `$${(12 + currentPizzaIndex * 2).toFixed(2)}`;
+    // if (lineupPrice) lineupPrice.textContent = `$${(12 + currentPizzaIndex * 2).toFixed(2)}`;
 }
 
 // Menu Buttons
@@ -621,7 +621,7 @@ function removeTopping(id) {
 }
 
 function updatePrice() {
-    if (priceTag) priceTag.textContent = `$${(currentBasePrice + (toppingsCount * 1.5)).toFixed(2)}`;
+    // if (priceTag) priceTag.textContent = `$${(currentBasePrice + (toppingsCount * 1.5)).toFixed(2)}`;
 }
 
 // Global Event Listeners
