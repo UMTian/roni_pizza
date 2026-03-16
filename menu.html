@@ -1132,11 +1132,26 @@
 
         function checkout() {
             if (cart.length === 0) return;
+
             const total = cart.reduce((sum, item) => sum + item.total, 0);
-            showNotification(`Order placed! Total: PKR ${total}`);
+            const phoneNumber = "923338010986"; // International format for 03338010986
+
+            let message = "*New Order from Roni's Pizzeria*%0A%0A";
+            cart.forEach((item, index) => {
+                message += `${index + 1}. *${item.name}* (${item.size}) x ${item.quantity} - PKR ${item.total}%0A`;
+            });
+            message += `%0A*Total: PKR ${total}*%0A%0APlease confirm my order!`;
+
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+
+            // Clear cart
             cart = [];
             updateCartUI();
             toggleCart();
+            showNotification(`Redirecting to WhatsApp...`);
         }
 
         function filterItems(category) {
