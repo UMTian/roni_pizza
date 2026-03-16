@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pizza. | Your Delicious Pizza Start Here!</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+    rel="stylesheet">
+  <!-- Lucide Icons (optional, but good for profile/cart) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+  <header>
+    <nav class="container">
+      <div class="logo">
+        <img src="roni_logo.png" alt="Roni's Logo" id="main-logo">
+      </div>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="icon-btn" id="profile-btn"><i data-lucide="user"></i></button>
+        <button class="icon-btn" id="cart-btn">
+          <i data-lucide="shopping-bag"></i>
+          <span class="cart-badge">1</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <!-- Floating Ingredients -->
+      <div class="floating-elements">
+        <img src="bazel.png" alt="Basil" class="ingredient ingredient-1">
+        <img src="chili.png" alt="Chili" class="ingredient ingredient-2">
+        <img src="tomato.png" alt="Tomato" class="ingredient ingredient-3">
+        <img src="olive.png" alt="Olive" class="ingredient ingredient-4">
+        <img src="jalapeno.png" alt="Jalapeno" class="ingredient ingredient-5">
+        <img src="mashroom.png" alt="Mushroom" class="ingredient ingredient-6">
+        <!-- Add more if needed from design -->
+      </div>
+
+      <div class="hero-content container">
+        <h1 class="hero-title">Your Delicious Pizza <br> Start Here!</h1>
+        <div class="hero-actions">
+          <a href="menu.html" class="btn-primary">Order Now</a>
+        </div>
+      </div>
+
+      <div class="slider-controls">
+        <button class="slider-btn prev" id="prev-pizza">
+          <i data-lucide="chevron-left"></i>
+        </button>
+        <button class="slider-btn next" id="next-pizza">
+          <i data-lucide="chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- The persistent pizza that will travel -->
+      <div class="main-pizza-wrapper">
+        <img src="pizza.png" alt="Delicious Pizza" id="traveling-pizza">
+      </div>
+    </section>
+
+    <section class="details-section">
+      <div class="container details-grid">
+        <div class="details-visual">
+          <div class="pizza-target-spot" id="pizza-spot-2">
+            <div class="yellow-glow"></div>
+
+            <!-- Revolving Ingredients -->
+            <div class="revolving-container">
+              <img src="olive.png" alt="Olive" class="rev-item rev-1">
+              <img src="bazel.png" alt="Basil" class="rev-item rev-2">
+              <img src="tomato.png" alt="Tomato" class="rev-item rev-3">
+              <img src="chili.png" alt="Chili" class="rev-item rev-4">
+              <img src="mashroom.png" alt="Mushroom" class="rev-item rev-5">
+            </div>
+
+          </div>
+        </div>
+        <div class="details-content">
+          <h2 class="section-title">A Slice of <span class="highlight">Perfection</span> <br> in Every Bite!</h2>
+          <p class="section-desc">
+            Crafted with fresh ingredients, bold flavors, and a whole lot of love — our pizzas are designed to satisfy
+            your cravings. Whether you love classic combos or adventurous toppings, every slice is a journey of taste
+            that'll keep you coming back for more!
+          </p>
+          <a href="menu.html" class="btn-primary">View More</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-section">
+      <div class="container">
+        <div class="menu-header text-center">
+          <h2 class="section-title">Explore Our <span class="highlight">Menu</span></h2>
+          <p class="section-desc">Swipe or click to browse our signature collection. Each pizza is a story of flavor.
+          </p>
+        </div>
+
+        <div class="pizza-carousel-container">
+          <div class="carousel-nav prev-btn">
+            <i data-lucide="chevron-left"></i>
+          </div>
+
+          <div class="pizza-lineup">
+            <div id="pizza-spot-3" style="width: 200px; height: 240px; z-index: 1;"></div>
+
+            <img class="carousel-pizza" src="pizza.png" alt="Pizza">
+            <img class="carousel-pizza" src="pepparoni.png" alt="Pizza">
+            <img class="carousel-pizza" src="margarita.png" alt="Pizza">
+            <img class="carousel-pizza" src="hawaii.png" alt="Pizza">
+            <img class="carousel-pizza" src="vegetable.png" alt="Pizza">
+          </div>
+
+          <div class="carousel-nav next-btn">
+            <i data-lucide="chevron-right"></i>
+          </div>
+        </div>
+
+        <div class="menu-info text-center">
+          <h3 id="lineup-name">Margarita Pizza</h3>
+          <p id="lineup-desc">Classic Italian flavors with fresh basil and mozzarella.</p>
+          <div class="price-tag" id="lineup-price">$12.00</div>
+          <button class="btn-primary">Order Now</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="chef-section">
+      <div class="container chef-grid">
+        <div class="chef-visual">
+          <div class="chef-image-container">
+            <div class="chef-red-circle"></div>
+            <img src="cheff.png" alt="Our Chef" class="chef-img">
+            <!-- Target spot for traveling pizza -->
+            <div id="pizza-spot-4" class="pizza-hand-spot"></div>
+          </div>
+
+          <!-- Decorative ingredients -->
+          <img src="bazel.png" alt="Basil" class="chef-decor decor-1">
+          <img src="tomato.png" alt="Tomato" class="chef-decor decor-2">
+          <img src="mashroom.png" alt="Mushroom" class="chef-decor decor-3">
+        </div>
+
+        <div class="chef-content">
+          <h2 class="section-title">Meet the <span class="highlight">Maestro</span> <br> Behind the Magic!</h2>
+          <p class="section-desc">
+            Our head chef isn't just passionate about pizza — he's obsessed with it. With over 15 years of experience,
+            every crust is a masterpiece of taste and texture. <br><br>
+            From hand-kneaded dough to the perfect topping combinations, our chef ensures every slice delivers pure
+            deliciousness, baked to perfection for you. 🍕
+          </p>
+          <a href="#" class="btn-chef">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="builder-section">
+      <div class="container builder-container">
+        <div class="builder-header text-center">
+          <h2 class="section-title">Craft Your <span class="highlight">Masterpiece</span></h2>
+          <p class="section-desc">Choose your dough, select your sauce, and pile on the toppings. Your perfect pizza is
+            just a few clicks away!</p>
+        </div>
+
+        <div class="builder-grid">
+          <!-- Pizza Visual Canvas -->
+          <div class="pizza-canvas">
+            <div class="dough-base" id="pizza-spot-5">
+              <div id="sauce-layer"></div>
+              <div id="cheese-moz-layer" class="cheese-type-layer"></div>
+              <div id="cheese-chadder-layer" class="cheese-type-layer"></div>
+              <div id="cheese-parmezan-layer" class="cheese-type-layer"></div>
+              <div id="toppings-layer"></div>
+            </div>
+            <div class="canvas-glow"></div>
+          </div>
+
+          <!-- Controls / Selection -->
+          <div class="builder-controls">
+            <div class="category-tabs">
+              <button class="tab-btn active" data-category="sauces">
+                <i data-lucide="droplets"></i> <span class="tab-text">Sauces</span>
+              </button>
+              <button class="tab-btn" data-category="cheese">
+                <i data-lucide="citrus"></i> <span class="tab-text">Cheese</span>
+              </button>
+              <button class="tab-btn" data-category="toppings">
+                <i data-lucide="leaf"></i> <span class="tab-text">Ingredients</span>
+              </button>
+            </div>
+
+            <div class="ingredients-list">
+              <!-- Sauces -->
+              <div class="ingredient-group active" id="group-sauces">
+                <div class="ingredient-card" data-topping="sauce-tomato" data-type="sauce">
+                  <div class="ing-icon">🍅</div>
+                  <span>Classic Tomato</span>
+                </div>
+                <div class="ingredient-card" data-topping="sauce-garlic" data-type="sauce">
+                  <div class="ing-icon">🧄</div>
+                  <span>White Garlic</span>
+                </div>
+                <div class="ingredient-card" data-topping="sauce-bbq" data-type="sauce">
+                  <div class="ing-icon">🔥</div>
+                  <span>Spicy BBQ</span>
+                </div>
+              </div>
+
+              <!-- Cheeses -->
+              <div class="ingredient-group" id="group-cheese">
+                <div class="ingredient-card" data-topping="cheese-moz" data-type="cheese">
+                  <div class="ing-icon">🧀</div>
+                  <span>Mozzarella</span>
+                </div>
+                <div class="ingredient-card" data-topping="cheese-cheddar" data-type="cheese">
+                  <div class="ing-icon">🧀</div>
+                  <span>Cheddar Mix</span>
+                </div>
+                <div class="ingredient-card" data-topping="cheese-parm" data-type="cheese">
+                  <div class="ing-icon">🧀</div>
+                  <span>Parmesan</span>
+                </div>
+              </div>
+
+              <!-- Toppings -->
+              <div class="ingredient-group" id="group-toppings">
+                <div class="ingredient-card" data-topping="topping-tomato" data-img="tomato_i.png">
+                  <img src="tomato_i.png" alt="Tomato">
+                  <span>Tomato</span>
+                </div>
+                <div class="ingredient-card" data-topping="topping-capsicum" data-img="capsicum_i.png">
+                  <img src="capsicum_i.png" alt="Capsicum">
+                  <span>Capsicum</span>
+                </div>
+                <div class="ingredient-card" data-topping="topping-chicken" data-img="chicken_i.png">
+                  <img src="chicken_i.png" alt="Chicken">
+                  <span>Chicken</span>
+                </div>
+                <div class="ingredient-card" data-topping="topping-olive" data-img="olive_i.png">
+                  <img src="olive_i.png" alt="Olive">
+                  <span>Olive</span>
+                </div>
+                <div class="ingredient-card" data-topping="topping-onion" data-img="onion_i.png">
+                  <img src="onion_i.png" alt="Onion">
+                  <span>Onion</span>
+                </div>
+                <div class="ingredient-card" data-topping="topping-pepperoni" data-img="pepporoni_i.png">
+                  <img src="pepporoni_i.png" alt="Pepperoni">
+                  <span>Pepperoni</span>
+                </div>
+                <div class="ingredient-card" data-topping="topping-jalapeno" data-img="jalapino_i.png">
+                  <img src="jalapino_i.png" alt="Jalapeno">
+                  <span>Jalapeno</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="builder-footer">
+              <div class="total-price">Total: <span id="custom-price">$12.00</span></div>
+              <button class="btn-primary" id="bake-btn">Bake it</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Section 6: Contact Us -->
+  <section class="contact-section" id="contact">
+    <div class="contact-bg-elements">
+      <div class="contact-float-item pizza-slice-1">🍕</div>
+      <div class="contact-float-item leaf-1">🌿</div>
+      <div class="contact-float-item tomato-1">🍅</div>
+    </div>
+
+    <div class="container">
+      <div class="contact-wrapper">
+        <div class="contact-info-side">
+          <h2 class="section-title">Visit Roni's</h2>
+          <p class="section-desc">Freshly baked, just for you. Come grab a slice or follow our journey on social media.
+          </p>
+
+          <div class="contact-details">
+            <a href="https://maps.app.goo.gl/tKtFe5pspvNsCMQp7" target="_blank" class="contact-item">
+              <div class="contact-icon">📍</div>
+              <div class="contact-text">
+                <strong>Find Us</strong>
+                <span>Roni's Pizzeria, Interactive Lane</span>
+              </div>
+            </a>
+
+            <a href="https://www.instagram.com/roniwaslike/" target="_blank" class="contact-item">
+              <div class="contact-icon">📸</div>
+              <div class="contact-text">
+                <strong>Instagram</strong>
+                <span>@roniwaslike</span>
+              </div>
+            </a>
+
+            <div class="contact-item">
+              <div class="contact-icon">📞</div>
+              <div class="contact-text">
+                <strong>Call Us</strong>
+                <span>+1 (555) 7664-PIZZA</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-pills">
+            <a href="https://www.instagram.com/roniwaslike/" target="_blank" class="social-pill">Follow @roniwaslike</a>
+          </div>
+        </div>
+
+        <div class="contact-form-side">
+          <form class="contact-glass-form"
+            onsubmit="event.preventDefault(); alert('Reservation requested! Roni will confirm shortly.');">
+            <h3>Make a Reservation</h3>
+            <div class="input-group">
+              <input type="text" placeholder="Your Name" required>
+            </div>
+            <div class="form-row" style="display: flex; gap: 15px;">
+              <div class="input-group" style="flex: 1;">
+                <input type="date" required>
+              </div>
+              <div class="input-group" style="flex: 1;">
+                <input type="time" required>
+              </div>
+            </div>
+            <div class="input-group">
+              <select required
+                style="width: 100%; padding: 15px 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: #fff; font-family: inherit; font-size: 16px;">
+                <option value="" disabled selected>Number of Guests</option>
+                <option value="1">1 Person</option>
+                <option value="2">2 People</option>
+                <option value="3">3 People</option>
+                <option value="4">4 People</option>
+                <option value="5">5+ People</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <textarea placeholder="Special requests (optional)..." rows="3"></textarea>
+            </div>
+            <button type="submit" class="submit-btn">
+              <span>Book a Table</span>
+              <div class="btn-hover-effect"></div>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <footer class="mini-footer">
+      <p>&copy; 2024 Roni's Pizzeria. Made with ❤️ and lots of Mozzarella.</p>
+    </footer>
+  </section>
+
+
+  <script src="script.js"></script>
+</body>
+
+</html>

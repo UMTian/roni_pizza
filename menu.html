@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roni's Pizza - Artisan Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --skin-light: #EBDCCB;
+            --skin-medium: #D9C1A3;
+            --skin-dark: #C7A985;
+            --tomato: #C41E3A;
+            --tomato-light: #E85D4E;
+            --olive: #556B2F;
+            --charcoal: #2C2416;
+            --cream: #F5EFE6;
+        }
+
+        /* Custom Red Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--skin-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #dc2626;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b91c1c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: #dc2626 var(--skin-light);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, var(--skin-light) 0%, var(--cream) 100%);
+            color: var(--charcoal);
+            min-height: 100vh;
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 250, 245, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--skin-dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Filter Section */
+        .filter-container {
+            background: var(--cream);
+            border-bottom: 1px solid var(--skin-medium);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 80px;
+            z-index: 90;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--skin-dark);
+            background: transparent;
+            color: var(--charcoal);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--tomato);
+            border-color: var(--tomato);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+        }
+
+        .filter-scroll {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 0.5rem;
+            scrollbar-width: none;
+        }
+
+        .filter-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Section Partitioning */
+        .menu-section {
+            padding: 4rem 0;
+            position: relative;
+            scroll-margin-top: 100px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding: 0 2rem;
+        }
+
+        .section-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--tomato);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 1.5rem;
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.3);
+        }
+
+        .section-title-group {
+            flex: 1;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 0.25rem;
+        }
+
+        .section-subtitle {
+            color: var(--olive);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.9rem;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, var(--skin-dark), transparent);
+            margin-left: 2rem;
+        }
+
+        /* Food Cards */
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            padding: 0 2rem;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--skin-medium);
+            position: relative;
+        }
+
+        .food-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: var(--tomato);
+        }
+
+        .card-image-container {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--skin-light), var(--skin-medium));
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .food-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--tomato);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            z-index: 10;
+        }
+
+        .card-badge.veg {
+            background: var(--olive);
+        }
+
+        .card-badge.spicy {
+            background: #FF6B35;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            font-family: 'Playfair Display', serif;
+            line-height: 1.2;
+        }
+
+        .card-price {
+            text-align: right;
+        }
+
+        .price-tag {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--tomato);
+        }
+
+        .price-tag.small {
+            font-size: 0.9rem;
+            color: var(--charcoal);
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+
+        .card-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--skin-medium);
+        }
+
+        .size-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .size-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--skin-dark);
+            background: transparent;
+            border-radius: 50%;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--charcoal);
+        }
+
+        .size-btn:hover,
+        .size-btn.active {
+            background: var(--tomato);
+            border-color: var(--tomato);
+            color: white;
+        }
+
+        .add-btn {
+            background: var(--charcoal);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .add-btn:hover {
+            background: var(--tomato);
+            transform: scale(1.05);
+        }
+
+        /* Extras Section */
+        .extras-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .extras-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid var(--skin-medium);
+            transition: all 0.3s;
+        }
+
+        .extras-card:hover {
+            border-color: var(--tomato);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .extras-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--tomato);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .extra-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--skin-light);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .extra-item:hover {
+            color: var(--tomato);
+            padding-left: 10px;
+        }
+
+        .extra-item:last-child {
+            border-bottom: none;
+        }
+
+        .extra-price {
+            font-weight: 700;
+            color: var(--olive);
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            background: var(--tomato);
+            color: white;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--cream);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--skin-medium);
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .cart-item-meta {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--tomato);
+        }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 2px solid var(--skin-medium);
+            background: white;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--tomato);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: var(--charcoal);
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Floating Cart Button */
+        .fab-cart {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 70px;
+            height: 70px;
+            background: var(--tomato);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4);
+            cursor: pointer;
+            z-index: 98;
+            transition: all 0.3s;
+            border: 4px solid white;
+        }
+
+        .fab-cart:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .fab-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--charcoal);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: 2px solid white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .food-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .section-line {
+                display: none;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .hidden-item {
+            display: none !important;
+        }
+
+        /* Contact Section Styles */
+        .contact-section {
+            background: var(--charcoal);
+            color: var(--skin-light);
+            padding: 80px 2rem;
+            text-align: center;
+            scroll-margin-top: 100px;
+        }
+
+        .contact-grid-simple {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 40px auto 0;
+        }
+
+        .contact-box {
+            padding: 30px;
+            border: 1px solid rgba(245, 230, 211, 0.2);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .contact-box:hover {
+            border-color: var(--skin-light);
+            background: rgba(245, 230, 211, 0.05);
+        }
+
+        .contact-box i {
+            font-size: 2rem;
+            color: var(--tomato-light);
+            margin-bottom: 20px;
+        }
+
+        .contact-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .contact-box a {
+            color: var(--skin-light);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+
+        .contact-box a:hover {
+            opacity: 1;
+            color: var(--tomato-light);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="roni_logo.png" alt="Roni's Logo" class="h-12 w-auto">
+            </div>
+            <nav class="hidden md:flex gap-8">
+                <a href="#menu" class="text-[#2C2416] font-semibold hover:text-[#C41E3A] transition-colors">Menu</a>
+                <a href="index.html"
+                    class="text-[#2C2416] font-semibold hover:text-[#C41E3A] transition-colors">Home</a>
+                <a href="#contact"
+                    class="text-[#2C2416] font-semibold hover:text-[#C41E3A] transition-colors">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Filter Bar -->
+    <div class="filter-container">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="filter-scroll">
+                <button class="filter-btn active" onclick="filterItems('all')">
+                    <i class="fas fa-th-large mr-2"></i>All Items
+                </button>
+                <button class="filter-btn" onclick="filterItems('classic')">
+                    <i class="fas fa-fire mr-2"></i>Classic Pizzas
+                </button>
+                <button class="filter-btn" onclick="filterItems('special')">
+                    <i class="fas fa-crown mr-2"></i>Roni's Specials
+                </button>
+                <button class="filter-btn" onclick="filterItems('protein')">
+                    <i class="fas fa-dumbbell mr-2"></i>Protein Specials
+                </button>
+                <button class="filter-btn" onclick="filterItems('veg')">
+                    <i class="fas fa-leaf mr-2"></i>Vegetarian
+                </button>
+                <button class="filter-btn" onclick="filterItems('spicy')">
+                    <i class="fas fa-pepper-hot mr-2"></i>Spicy
+                </button>
+                <button class="filter-btn" onclick="filterItems('extras')">
+                    <i class="fas fa-plus-circle mr-2"></i>Extras
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto pb-32">
+
+        <!-- Classic Pizzas Section -->
+        <section class="menu-section" data-category="classic" id="menu">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div class="section-title-group">
+                    <h2 class="section-title font-display">Classic Pizzas</h2>
+                    <p class="section-subtitle">Timeless Favorites</p>
+                </div>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="food-grid" id="classicGrid">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Roni's Specials Section -->
+        <section class="menu-section" data-category="special"
+            style="background: linear-gradient(180deg, transparent 0%, rgba(245,230,211,0.5) 50%, transparent 100%);">
+            <div class="section-header">
+                <div class="section-icon" style="background: #D4AF37;">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="section-title-group">
+                    <h2 class="section-title font-display">Roni's Specials</h2>
+                    <p class="section-subtitle">Chef's Signature Creations</p>
+                </div>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="food-grid" id="specialGrid">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Protein Specials Section -->
+        <section class="menu-section" data-category="protein">
+            <div class="section-header">
+                <div class="section-icon" style="background: #8B4513;">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <div class="section-title-group">
+                    <h2 class="section-title font-display">Protein Specials</h2>
+                    <p class="section-subtitle">For the Meat Lovers</p>
+                </div>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="food-grid" id="proteinGrid">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Extras Section -->
+        <section class="menu-section" data-category="extras">
+            <div class="section-header">
+                <div class="section-icon" style="background: #556B2F;">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <div class="section-title-group">
+                    <h2 class="section-title font-display">Make It Better</h2>
+                    <p class="section-subtitle">Customize Your Experience</p>
+                </div>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="extras-grid" id="extrasGrid">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <h2 class="section-title font-display" style="color: var(--skin-light)">Find Us</h2>
+            <p style="opacity: 0.7">Handcrafted pizzas, straight from our oven to your soul.</p>
+
+            <div class="contact-grid-simple">
+                <div class="contact-box">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Visit Us</h3>
+                    <a href="https://maps.app.goo.gl/tKtFe5pspvNsCMQp7" target="_blank">
+                        Artisan Avenue, Pizza Plaza<br>
+                        Click for Directions
+                    </a>
+                </div>
+                <div class="contact-box">
+                    <i class="fab fa-instagram"></i>
+                    <h3>Socials</h3>
+                    <a href="https://www.instagram.com/roniwaslike/" target="_blank">
+                        @roniwaslike
+                    </a>
+                </div>
+                <div class="contact-box">
+                    <i class="fas fa-phone-alt"></i>
+                    <h3>Call Roni</h3>
+                    <a href="tel:+1234567890">+1 (234) 567-890</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3 class="text-2xl font-display font-bold">Your Order</h3>
+            <button onclick="toggleCart()" class="text-white hover:rotate-90 transition-transform">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="text-center text-gray-500 mt-8">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cartTotal">PKR 0</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">
+                <i class="fas fa-credit-card mr-2"></i>Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Floating Cart Button -->
+    <div class="fab-cart" onclick="toggleCart()">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="fab-count" id="fabCount" style="display: none;">0</span>
+    </div>
+
+    <script>
+        // Data with Unsplash images
+        const menuData = {
+            classic: [
+                {
+                    id: 1,
+                    name: "Margherita",
+                    description: "Homemade Marinara Sauce, Fresh Mozzarella, Parmesan Dust, Fresh Basil",
+                    prices: { M: 1295, L: 1495 },
+                    image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=500&h=400&fit=crop",
+                    tags: ["veg", "classic"],
+                    badge: "Classic"
+                },
+                {
+                    id: 2,
+                    name: "Hawaiian Heat",
+                    description: "Smoked Chicken, Beef Sausage, Sweet Corn, Onion, Chili Flakes on Marinara",
+                    prices: { M: 1295, L: 1495 },
+                    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500&h=400&fit=crop",
+                    tags: ["spicy", "meat"],
+                    badge: "Spicy"
+                },
+                {
+                    id: 3,
+                    name: "Veggie Delight",
+                    description: "Fresh Onion, Tomato, Mushroom, Sweet Corn, Jalapeno on Marinara Base",
+                    prices: { M: 1295, L: 1495 },
+                    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&h=400&fit=crop",
+                    tags: ["veg", "spicy"],
+                    badge: "Veg"
+                }
+            ],
+            special: [
+                {
+                    id: 4,
+                    name: "Fajjita Special",
+                    description: "Chicken Fajita Chunks, Onion, Jalapeno, Green Chili, Signature Sauce",
+                    prices: { M: 1595, L: 1995 },
+                    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500&h=400&fit=crop",
+                    tags: ["spicy", "special"],
+                    badge: "Hot"
+                },
+                {
+                    id: 5,
+                    name: "Roni's Supreme",
+                    description: "Smoked Chicken, Fajita, Black Olives, Mushroom, Capsicum - Fully Loaded",
+                    prices: { M: 1595, L: 1995 },
+                    image: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=500&h=400&fit=crop",
+                    tags: ["meat", "special"],
+                    badge: "Best Seller"
+                },
+                {
+                    id: 6,
+                    name: "Chicken & Mushroom",
+                    description: "Tender Chicken Chunks, Fresh Mushroom, Black Olives, Creamy Base",
+                    prices: { M: 1595, L: 1995 },
+                    image: "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=500&h=400&fit=crop",
+                    tags: ["meat"],
+                    badge: "Creamy"
+                }
+            ],
+            protein: [
+                {
+                    id: 7,
+                    name: "Beef Lover's",
+                    description: "Minced Beef, Beef Sausage, Beef Pepperoni, Jalapeno, Onion, Capsicum",
+                    prices: { M: 1895, L: 2395 },
+                    image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=500&h=400&fit=crop",
+                    tags: ["meat", "protein"],
+                    badge: "Triple Meat"
+                },
+                {
+                    id: 8,
+                    name: "Egg Pepperoni",
+                    description: "Premium Beef Pepperoni, Farm Fresh Egg, Mozzarella Blend",
+                    prices: { M: 1895, L: 2395 },
+                    image: "https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=500&h=400&fit=crop",
+                    tags: ["meat", "protein"],
+                    badge: "Protein+"
+                }
+            ]
+        };
+
+        const extrasData = {
+            protein: {
+                title: "Extra Protein",
+                icon: "fa-drumstick-bite",
+                items: [
+                    { name: "Tikka Chunks", price: 245 },
+                    { name: "Beef Sausages", price: 245 },
+                    { name: "Minced Beef", price: 245 },
+                    { name: "Grilled Chicken", price: 245 }
+                ]
+            },
+            cheese: {
+                title: "Extra Cheese",
+                icon: "fa-cheese",
+                items: [
+                    { name: "Mozzarella Layer", price: 185 },
+                    { name: "Cheddar Blend", price: 185 },
+                    { name: "Parmesan Dust", price: 145 }
+                ]
+            },
+            dips: {
+                title: "Dips & Sauces",
+                icon: "fa-wine-bottle",
+                items: [
+                    { name: "Chilli Oil", price: 95 },
+                    { name: "Peri Peri Jalapeno", price: 95 },
+                    { name: "Creamy Garlic", price: 95 },
+                    { name: "BBQ Sauce", price: 95 }
+                ]
+            },
+            drinks: {
+                title: "Beverages",
+                icon: "fa-glass-whiskey",
+                items: [
+                    { name: "Pepsi", price: 145 },
+                    { name: "7up", price: 145 },
+                    { name: "Mineral Water", price: 90 },
+                    { name: "Cold Coffee", price: 195 }
+                ]
+            }
+        };
+
+        let cart = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMenu();
+            setupIntersectionObserver();
+        });
+
+        function renderMenu() {
+            // Render Classic
+            document.getElementById('classicGrid').innerHTML = menuData.classic.map(item => createFoodCard(item)).join('');
+
+            // Render Specials
+            document.getElementById('specialGrid').innerHTML = menuData.special.map(item => createFoodCard(item)).join('');
+
+            // Render Protein
+            document.getElementById('proteinGrid').innerHTML = menuData.protein.map(item => createFoodCard(item)).join('');
+
+            // Render Extras
+            document.getElementById('extrasGrid').innerHTML = Object.entries(extrasData).map(([key, category]) => `
+                <div class="extras-card" data-category="extras">
+                    <h3 class="extras-title">
+                        <i class="fas ${category.icon}"></i>
+                        ${category.title}
+                    </h3>
+                    ${category.items.map(item => `
+                        <div class="extra-item" onclick="addExtra('${item.name}', ${item.price})">
+                            <span>${item.name}</span>
+                            <span class="extra-price">+${item.price}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('');
+        }
+
+        function createFoodCard(item) {
+            const tags = item.tags.join(' ');
+            return `
+                <div class="food-card animate-in" data-category="${item.tags.join(' ')}" data-id="${item.id}">
+                    <div class="card-image-container">
+                        <img src="${item.image}" alt="${item.name}" class="card-image">
+                        <span class="card-badge ${item.tags.includes('veg') ? 'veg' : item.tags.includes('spicy') ? 'spicy' : ''}">${item.badge}</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-title">${item.name}</h3>
+                            <div class="card-price">
+                                <span class="price-tag">PKR ${item.prices.M}</span>
+                                <span class="price-tag small">L: ${item.prices.L}</span>
+                            </div>
+                        </div>
+                        <p class="card-description">${item.description}</p>
+                        <div class="card-footer">
+                            <div class="size-selector">
+                                <button class="size-btn active" onclick="selectSize(this, '${item.id}', 'M', ${item.prices.M})">M</button>
+                                <button class="size-btn" onclick="selectSize(this, '${item.id}', 'L', ${item.prices.L})">L</button>
+                            </div>
+                            <button class="add-btn" onclick="addToCart('${item.id}', '${item.name}')">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectSize(btn, id, size, price) {
+            // Remove active from siblings
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Update price display
+            const card = btn.closest('.food-card');
+            const priceTag = card.querySelector('.price-tag');
+            priceTag.textContent = `PKR ${price}`;
+
+            // Store selection
+            card.dataset.selectedSize = size;
+            card.dataset.selectedPrice = price;
+        }
+
+        function addToCart(id, name) {
+            const card = document.querySelector(`[data-id="${id}"]`);
+            const size = card.dataset.selectedSize || 'M';
+            const price = parseInt(card.dataset.selectedPrice) || menuData[Object.keys(menuData).find(k => menuData[k].find(i => i.id == id))].find(i => i.id == id).prices[size];
+
+            const existingItem = cart.find(item => item.id == id && item.size == size);
+
+            if (existingItem) {
+                existingItem.quantity++;
+                existingItem.total = existingItem.quantity * existingItem.price;
+            } else {
+                cart.push({
+                    id: id,
+                    name: name,
+                    size: size,
+                    price: price,
+                    quantity: 1,
+                    total: price,
+                    image: card.querySelector('.card-image').src
+                });
+            }
+
+            updateCartUI();
+            showNotification(`Added ${name} (${size}) to cart!`);
+        }
+
+        function addExtra(name, price) {
+            cart.push({
+                id: Date.now(),
+                name: name,
+                size: '-',
+                price: price,
+                quantity: 1,
+                total: price,
+                isExtra: true
+            });
+            updateCartUI();
+            showNotification(`Added ${name} to cart!`);
+        }
+
+        function updateCartUI() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const fabCount = document.getElementById('fabCount');
+
+            if (count > 0) {
+                fabCount.textContent = count;
+                fabCount.style.display = 'flex';
+            } else {
+                fabCount.style.display = 'none';
+            }
+
+            renderCartItems();
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cartItems');
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 mt-8">Your cart is empty</p>';
+                document.getElementById('cartTotal').textContent = 'PKR 0';
+                return;
+            }
+
+            container.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    ${item.image ? `<img src="${item.image}" class="cart-item-image" alt="${item.name}">` : '<div class="cart-item-image bg-gray-200 flex items-center justify-center"><i class="fas fa-utensils text-gray-400"></i></div>'}
+                    <div class="cart-item-details">
+                        <div class="cart-item-title">${item.name}</div>
+                        <div class="cart-item-meta">Size: ${item.size} • Qty: ${item.quantity}</div>
+                    </div>
+                    <div class="cart-item-price">PKR ${item.total}</div>
+                    <button onclick="removeItem(${index})" class="text-red-500 hover:text-red-700 ml-2">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + item.total, 0);
+            document.getElementById('cartTotal').textContent = `PKR ${total}`;
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function checkout() {
+            if (cart.length === 0) return;
+            const total = cart.reduce((sum, item) => sum + item.total, 0);
+            showNotification(`Order placed! Total: PKR ${total}`);
+            cart = [];
+            updateCartUI();
+            toggleCart();
+        }
+
+        function filterItems(category) {
+            // Update buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(category) ||
+                    (category === 'all' && btn.textContent.includes('All'))) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Filter sections
+            const sections = document.querySelectorAll('.menu-section');
+            const cards = document.querySelectorAll('.food-card');
+            const extras = document.querySelector('.extras-grid');
+
+            if (category === 'all') {
+                sections.forEach(s => s.style.display = 'block');
+                cards.forEach(c => c.classList.remove('hidden-item'));
+                if (extras) extras.style.display = 'grid';
+            } else if (category === 'extras') {
+                sections.forEach(s => s.style.display = 'none');
+                if (extras) {
+                    extras.style.display = 'grid';
+                    extras.closest('.menu-section').style.display = 'block';
+                }
+            } else {
+                // Filter by tags
+                cards.forEach(card => {
+                    const tags = card.dataset.category;
+                    if (tags && tags.includes(category)) {
+                        card.classList.remove('hidden-item');
+                        card.closest('.menu-section').style.display = 'block';
+                    } else {
+                        card.classList.add('hidden-item');
+                    }
+                });
+
+                // Hide empty sections
+                sections.forEach(section => {
+                    const visibleCards = section.querySelectorAll('.food-card:not(.hidden-item)');
+                    if (visibleCards.length === 0 && !section.querySelector('.extras-grid')) {
+                        section.style.display = 'none';
+                    }
+                });
+
+                if (extras) extras.style.display = 'none';
+            }
+
+            // Scroll to top of menu
+            document.querySelector('.filter-container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showNotification(message) {
+            const notif = document.createElement('div');
+            notif.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%) translateY(20px);
+                background: #2C2416;
+                color: #F5E6D3;
+                padding: 1rem 2rem;
+                border-radius: 50px;
+                font-weight: 700;
+                z-index: 10000;
+                opacity: 0;
+                transition: all 0.3s;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            `;
+            notif.textContent = message;
+            document.body.appendChild(notif);
+
+            setTimeout(() => {
+                notif.style.opacity = '1';
+                notif.style.transform = 'translateX(-50%) translateY(0)';
+            }, 10);
+
+            setTimeout(() => {
+                notif.style.opacity = '0';
+                notif.style.transform = 'translateX(-50%) translateY(20px)';
+                setTimeout(() => notif.remove(), 300);
+            }, 3000);
+        }
+
+        function setupIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.food-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+        }
+    </script>
+</body>
+
+</html>
